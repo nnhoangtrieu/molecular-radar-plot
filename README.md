@@ -1,6 +1,7 @@
 # Molecular Radar Plot
 
 A flexible Python tool for generating radar plots to visualize molecular properties using RDKit descriptors. This tool allows you to visualize and analyze the distribution of any molecular descriptor available in RDKit across your chemical dataset.
+
 ---
 
 ## Key Features
