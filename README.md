@@ -1,6 +1,7 @@
 # Molecular Radar Plot
 
 A flexible Python tool for generating radar plots to visualize molecular properties using RDKit descriptors. This tool allows you to visualize and analyze the distribution of any molecular descriptor available in RDKit across your chemical dataset.
+---
 
 ## Key Features
 
@@ -9,6 +10,7 @@ A flexible Python tool for generating radar plots to visualize molecular propert
 - Flexible descriptor selection using any RDKit molecular descriptor
 - Customizable property ranges for visualization
 - Support for pre-calculated descriptors in SDF files
+---
 
 ## Installation
 
@@ -16,18 +18,9 @@ A flexible Python tool for generating radar plots to visualize molecular propert
 ```bash
 pip install rdkit pandas matplotlib numpy tqdm
 ```
+---
 
 ## Usage
-
-Basic usage with SMILES input:
-```bash
-python molecular-radar-plot.py -i molecules.smi --MW 200,500 --HBA 2,5 --HBD 1,3
-```
-
-Using SDF file with existing descriptors:
-```bash
-python molecular-radar-plot.py -i molecules.sdf -e "MW:[200,500] HBA:[2,5] HBD:[1,3]"
-```
 
 ### Command Line Arguments
 
@@ -36,13 +29,32 @@ python molecular-radar-plot.py -i molecules.sdf -e "MW:[200,500] HBA:[2,5] HBD:[
 - `-e, --exist`: Descriptors that already exist in the SDF file (format: "DESC1:[min1,max1] DESC2:[min2,max2]")
 - `--{descriptor}`: Any RDKit descriptor with its range (format: min,max)
 
-Available descriptors include any molecular descriptor from RDKit's Descriptors module. Some common examples:
-- `MW`: Molecular Weight
+To view available rdkit Descriptors:
+```bash
+from rdkit.Chem import Descriptors
+print(Descriptors._descList)
+```
+
+Some common examples:
+- `ExactMolWt`: Molecular Weight
 - `TPSA`: Topological Polar Surface Area
-- `LogP`: Calculated LogP
-- `HBA`: Number of H-Bond Acceptors
-- `HBD`: Number of H-Bond Donors
-- `RotatableBonds`: Number of Rotatable Bonds
+- `MolLogP`: Calculated LogP
+- `NumHAcceptors`: Number of H-Bond Acceptors
+- `NumHDonors`: Number of H-Bond Donors
+- `NumRotatableBonds`: Number of Rotatable Bonds
+- `qed`: Quantitative estimate of drug-likeness
+
+Basic usage with descriptors available for calculation in rdkit:
+```bash
+python molecular-radar-plot.py -i molecules.smi --ExactMolWt 200,300 --NumHAcceptors 2,5 --NumHDonors 1,3 --qed 0.7,0.9
+```
+
+Using SDF file with existing descriptors:
+```bash
+python molecular-radar-plot.py -i molecules.sdf -e "MW:[200,500] HBA:[2,5] HBD:[1,3]"
+```
+
+---
 
 ## Output
 
@@ -53,19 +65,8 @@ The tool generates a radar plot showing:
 
 ![Example Radar Plot](data/radar-plot.png)
 
-## Advanced Usage
+---
 
-You can use any descriptor available in RDKit by specifying it as a command-line argument. For example:
-
-```bash
-python molecular-radar-plot.py -i molecules.smi \
-    --MW 200,500 \
-    --TPSA 40,140 \
-    --NumRotatableBonds 0,10 \
-    --NumHAcceptors 2,8 \
-    --NumHDonors 0,5 \
-    --MolLogP -0.4,5.6
-```
 
 ## Contributing
 
